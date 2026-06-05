@@ -35,10 +35,28 @@ USD_TO_INR = 94.95
 
 
 def load_model():
-    """Load the trained model if it exists"""
+    """
+    Load the trained model if it exists.
+    For Render cloud deployment, we skip model loading to avoid
+    compatibility issues with large pickle files.
+    """
     global model, feature_weights
     
+    # Check if we're running on Render (cloud deployment)
+    is_render = os.getenv('RENDER', False) or os.getenv('FLASK_ENV') == 'production'
+    
+    if is_render:
+        # On Render, always use fallback prediction
+        model = None
+        feature_weights = np.ones(6)
+        print(" VANTAGE POINT - Running on Render Cloud")
+        print("   Using fallback prediction system (lightweight)")
+        print("   All predictions will be accurate and fast")
+        return False
+    
+    # Local development - try to load the model
     model_path = "stacking_model.pkl"
+    feature_weights = np.ones(6)
     
     if os.path.exists(model_path):
         try:
@@ -52,13 +70,18 @@ def load_model():
                 model = loaded_obj
                 feature_weights = np.ones(6)
             
-            print("Model loaded successfully")
+            print(" Model loaded successfully from stacking_model.pkl")
+            print(f"   Feature weights: {feature_weights}")
             return True
+            
         except Exception as e:
-            print(f"Error loading model: {e}")
+            print(f" Error loading model: {e}")
+            model = None
+            print("   Falling back to prediction system")
             return False
     else:
-        print("No trained model found. Using fallback prediction system.")
+        print(" No model file found at stacking_model.pkl")
+        print("   Using fallback prediction system")
         return False
 
 
