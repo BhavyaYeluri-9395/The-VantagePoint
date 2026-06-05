@@ -729,7 +729,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
         if (rating >= 6.5) return { text: "SOLID HIT - Worth Watching", confidence: 75 };
         if (rating >= 5.5) return { text: "AVERAGE - Mixed Reviews", confidence: 60 };
         if (rating >= 4.0) return { text: "BELOW AVERAGE - For Fans Only", confidence: 45 };
-        return { text: "💸 BOX OFFICE BOMB - Skip It", confidence: 30 };
+        return { text: " BOX OFFICE BOMB - Skip It", confidence: 30 };
     }
 
     async function predict() {
@@ -1475,10 +1475,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
         <div>
             <!-- Currency Toggle -->
             <div class="input-group">
-                <div class="input-label">💱 SELECT CURRENCY</div>
+                <div class="input-label"> SELECT CURRENCY</div>
                 <div class="currency-toggle">
-                    <button id="currencyUSD" class="currency-btn currency-usd active">🇺🇸 USD ($)</button>
-                    <button id="currencyINR" class="currency-btn currency-inr">🇮🇳 INR (₹)</button>
+                    <button id="currencyUSD" class="currency-btn currency-usd active">USD ($)</button>
+                    <button id="currencyINR" class="currency-btn currency-inr">INR (₹)</button>
                 </div>
                 <div class="helper-text">Choose your preferred currency for budget and revenue</div>
             </div>
